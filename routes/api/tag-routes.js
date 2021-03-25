@@ -1,15 +1,15 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag, Category } = require('../../models');
+const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
 router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
-  Category.findAll({
+  Tag.findAll({
     include: [
       {
-        model: 'Product',
+        model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
   })
@@ -65,20 +65,21 @@ router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(req.body, {
     where: {
-      id: req.params.tag_id
+        id: req.params.id
     }
   })
-  .then(dbTagData => {
-    if (!dbTagData[0]) {
-      res.status(404).json({ message: 'No tag found with that id.'});
-      return;
-    }
-    res.json(dbTagData);
+    .then(dbTagData => {
+        if (!dbTagData[0]) {
+            res.status(404).json({ message: 'No tag found with this id'});
+            return;
+        }
+        res.json(dbTagData);
   })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
+    .catch(err => {
+        console.log(err); 
+        res.status(500).json(err);
   });
+
 });
 
 router.delete('/:id', (req, res) => {

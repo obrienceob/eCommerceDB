@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { canTreatArrayAsAnd } = require('sequelize/types/lib/utils');
 const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
@@ -15,7 +14,7 @@ router.get('/', (req, res) => {
       }
     ]
   })
-    .then(categoryData => res.json(categoryData))
+    .then(dbCategoryData => res.json(dbCategoryData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -36,12 +35,12 @@ router.get('/:id', (req, res) => {
       }
     ]
   })
-  .then(categoryData => {
-    if(!categoryData) {
+  .then(dbCategoryData => {
+    if(!dbCategoryData) {
       res.status(404).json({ message: 'Category with this id does not exist!'});
       return;
     }
-    res.json(categoryData);
+    res.json(dbCategoryData);
   })
   .catch(err => {
     console.log(err);
@@ -54,7 +53,7 @@ router.post('/', (req, res) => {
   Category.create({
     category_name: req.body.category_name
   })
-  .then(categoryData => res.json(categoryData)
+  .then(dbCategoryData => res.json(dbCategoryData)
   .catch (err => {
     console.log(err);
     res.status(500).json(err);
@@ -65,15 +64,15 @@ router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(req.body, {
     where: {
-      id: re.params.id
+      id: req.params.id
     }
   })
-  .then(categoryData => {
-    if(!categoryData[0]) {
+  .then(dbCategoryData => {
+    if(!dbCategoryData[0]) {
       res.status(404).json({ message: 'Category with this id does not exist!'});
       return;
     }
-    res.json(categoryData);
+    res.json(dbCategoryData);
   })
   .catch(err => {
     console.log(err);
@@ -88,12 +87,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }   
   })
-  .then(categoryData => {
-    if(!categoryData) {
+  .then(dbCategoryData => {
+    if(!dbCategoryData) {
       res.status(404).json({ message: 'Category with this id does not exist!'})
       return;
     }
-    res.json(categoryData);
+    res.json(dbCategoryData);
   })
   .catch(err => {
     console.log(err);
