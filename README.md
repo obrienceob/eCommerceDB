@@ -17,7 +17,7 @@ The user needs to clone this repository from GitHub. This application requires N
 ## Usage
 This application allows users to add, view, edit, and delecte categories, products, and tags. 
 
-Video showing MySQL walkthough and Insomnia walkthrough: <a src="https://drive.google.com/file/d/1iNeP0NOStM-hpFaI0Py_VMcZjqhN6sTS/preview" width="640" height="480">Screencastify Link</a>
+Video showing MySQL walkthough and Insomnia walkthrough: [Screencasify Link] ("https://drive.google.com/file/d/1iNeP0NOStM-hpFaI0Py_VMcZjqhN6sTS/preview")
 
 ## License
 This repository is licensed under the MIT: (https://opensource.org/licenses/MIT) license.
